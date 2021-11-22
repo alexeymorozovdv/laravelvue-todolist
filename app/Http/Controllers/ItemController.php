@@ -70,7 +70,7 @@ class ItemController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \never
      */
     public function update(Request $request, $id)
     {
@@ -94,6 +94,13 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Item::find($id);
+
+        if ($item) {
+            $item->delete();
+            return response('The item has been deleted!', 200);
+        }
+
+        return abort(404, 'Item not found');
     }
 }
